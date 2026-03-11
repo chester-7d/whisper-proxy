@@ -26,15 +26,12 @@ app.post("/transcribe", upload.single("audio"), async (req, res) => {
               : ".webm";
     const newPath = oldPath + ext;
     fs.renameSync(oldPath, newPath);
-
     console.log("Received file:", req.file.originalname, "mime:", mimeType, "ext used:", ext);
-
     const transcription = await openai.audio.transcriptions.create({
       file: fs.createReadStream(newPath),
       model: "whisper-1",
       language: "en"
     });
-
     fs.unlinkSync(newPath);
     res.json({ text: transcription.text });
   } catch (err) {
