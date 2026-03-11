@@ -19,8 +19,15 @@ app.get("/", (req, res) => res.send("Whisper proxy running."));
 app.post("/transcribe", upload.single("audio"), async (req, res) => {
   try {
     const oldPath = req.file.path;
-    const newPath = oldPath + ".webm";
+    const mimeType = req.file.mimetype || "";
+    const ext = mimeType.includes("ogg") ? ".ogg"
+              : mimeType.includes("mp4") ? ".mp4"
+              : mimeType.includes("mpeg") ? ".mp3"
+              : ".webm";
+    const newPath = oldPath + ext;
     fs.renameSync(oldPath, newPath);
+
+    console.log("Received file:", req.file.originalname, "mime:", mimeType, "ext used:", ext);
 
     const transcription = await openai.audio.transcriptions.create({
       file: fs.createReadStream(newPath),
