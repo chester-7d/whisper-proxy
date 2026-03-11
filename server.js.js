@@ -6,20 +6,29 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const upload = multer({ dest: "uploads/" });
+const uploadDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
+const upload = multer({ dest: uploadDir });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.use(cors());
 
+app.get("/", (req, res) => res.send("Whisper proxy running."));
+
 app.post("/transcribe", upload.single("audio"), async (req, res) => {
   try {
-    const filePath = req.file.path;
+    const oldPath = req.file.path;
+    const newPath = oldPath + ".webm";
+    fs.renameSync(oldPath, newPath);
+
     const transcription = await openai.audio.transcriptions.create({
-      file: fs.createReadStream(filePath),
+      file: fs.createReadStream(newPath),
       model: "whisper-1",
       language: "en"
     });
-    fs.unlinkSync(filePath);
+
+    fs.unlinkSync(newPath);
     res.json({ text: transcription.text });
   } catch (err) {
     console.error(err);
@@ -27,4 +36,6 @@ app.post("/transcribe", upload.single("audio"), async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Whisper proxy running on port 3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Whisper proxy running on port " + PORT));
+```
