@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const multer = require("multer");
 const cors = require("cors");
 const OpenAI = require("openai");
@@ -20,18 +20,11 @@ app.post("/transcribe", upload.single("audio"), async (req, res) => {
   try {
     const oldPath = req.file.path;
     const mimeType = req.file.mimetype || "";
-    const ext = mimeType.includes("ogg") ? ".ogg"
-              : mimeType.includes("mp4") ? ".mp4"
-              : mimeType.includes("mpeg") ? ".mp3"
-              : ".webm";
+    const ext = mimeType.includes("ogg") ? ".ogg" : mimeType.includes("mp4") ? ".mp4" : mimeType.includes("mpeg") ? ".mp3" : ".webm";
     const newPath = oldPath + ext;
     fs.renameSync(oldPath, newPath);
-    console.log("Received file:", req.file.originalname, "mime:", mimeType, "ext used:", ext);
-    const transcription = await openai.audio.transcriptions.create({
-      file: fs.createReadStream(newPath),
-      model: "whisper-1",
-      language: "en"
-    });
+    console.log("mime:", mimeType, "ext:", ext);
+    const transcription = await openai.audio.transcriptions.create({ file: fs.createReadStream(newPath), model: "whisper-1", language: "en" });
     fs.unlinkSync(newPath);
     res.json({ text: transcription.text });
   } catch (err) {
@@ -42,4 +35,3 @@ app.post("/transcribe", upload.single("audio"), async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log("Whisper proxy running on port " + PORT));
-```
