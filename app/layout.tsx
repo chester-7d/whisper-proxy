@@ -19,7 +19,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Janzen & Gand Auto | Expert Automotive Service',
+  title: 'Janzen Ag and Auto | Expert Automotive Service',
   description: 'Saskatoon\'s trusted auto service shop. Oil changes, brakes, tires, diagnostics and more. Real craftsmanship, honest pricing.',
 }
 

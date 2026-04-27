@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode } from 'react'
 
 export type DemoRole = 'customer' | 'secretary' | 'mechanic' | 'foreman'
-export type DemoMechanic = 'dusty' | 'latent' | 'matt' | 'taylor'
+export type DemoMechanic = 'dusty' | 'layton' | 'matt' | 'tyler'
 
 interface DemoContextType {
   role: DemoRole

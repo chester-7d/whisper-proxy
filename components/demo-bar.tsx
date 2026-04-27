@@ -14,9 +14,9 @@ const ROLES: { id: DemoRole; label: string; path: string }[] = [
 
 const MECHANICS: { id: DemoMechanic; label: string }[] = [
   { id: 'dusty',  label: 'Dusty' },
-  { id: 'latent', label: 'Latent' },
+  { id: 'layton', label: 'Layton' },
   { id: 'matt',   label: 'Matt' },
-  { id: 'taylor', label: 'Taylor' },
+  { id: 'tyler',  label: 'Tyler' },
 ]
 
 export function DemoBar() {
