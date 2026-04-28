@@ -21,3 +21,4 @@ yarn-error.log
 
 # Uploads (legacy express server)
 uploads/
+tsconfig.tsbuildinfo
