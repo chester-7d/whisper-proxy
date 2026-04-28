@@ -63,13 +63,20 @@ export default function HomePage() {
         <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
           {/* Background */}
           <motion.div style={{ y }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-[#0D0808] to-brand-black" />
-            {/* Subtle grid */}
-            <div className="absolute inset-0 bg-grid-dark bg-grid opacity-100" />
-            {/* Red glow */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-brand-red/8 blur-[120px] rounded-full" />
-            {/* Amber accent */}
-            <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-brand-amber/5 blur-[100px] rounded-full" />
+            {/* Hero video */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src="/hero_video.mp4" type="video/mp4" />
+            </video>
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/60" />
+            {/* Bottom fade to page background */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent" />
           </motion.div>
 
           {/* Content */}
